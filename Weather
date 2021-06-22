@@ -1,0 +1,101 @@
+  
+import requests
+#import os
+from datetime import datetime
+
+api_key = '87d845b0b6cf29baa1a73cc34b067a95'
+location = input("Enter the city name: ")
+
+complete_api_link = "https://api.openweathermap.org/data/2.5/weather?q="+location+"&appid="+api_key
+api_link = requests.get(complete_api_link)
+api_data = api_link.json()
+
+#create variables to store and display data
+temp_city = ((api_data['main']['temp']) - 273.15)
+weather_desc = api_data['weather'][0]['description']
+hmdt = api_data['main']['humidity']
+wind_spd = api_data['wind']['speed']
+date_time = datetime.now().strftime("%d %b %Y | %I:%M:%S %p")
+
+print ("-------------------------------------------------------------")
+print ("Weather Stats for - {}  || {}".format(location.upper(), date_time))
+print ("-------------------------------------------------------------")
+
+print ("Current temperature is: {:.2f} deg C".format(temp_city))
+print ("Current weather desc  :",weather_desc)
+print ("Current Humidity      :",hmdt, '%')
+print ("Current wind speed    :",wind_spd ,'kmph')
+
+file1 = open("myfile.txt","w")
+L = ["This is Delhi \n","This is Paris \n","This is London \n"] 
+file1.close()
+  
+# Append-adds at last
+file1 = open("myfile.txt","a")#append mode
+file1.write("Today \n")
+file1.close()
+  
+file1 = open("myfile.txt","r")
+print "Output of Readlines after appending"
+print file1.readlines()
+print
+file1.close()
+  
+# Write-Overwrites
+file1 = open("myfile.txt","w")#write mode
+file1.write("Tomorrow \n")
+file1.close()
+  
+file1 = open("myfile.txt","r")
+print "Output of Readlines after writing"
+print file1.readlines()
+print
+file1.close()
+
+
+import requests, json
+ 
+api_key = "Your_API_Key"
+ 
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+city_name = input("Enter city name : ")
+ 
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+ 
+response = requests.get(complete_url)
+ 
+x = response.json()
+ 
+if x["cod"] != "404":
+ 
+
+    y = x["main"]
+ 
+   
+    current_temperature = y["temp"]
+ 
+    
+    current_pressure = y["pressure"]
+ 
+  
+    current_humidity = y["humidity"]
+ 
+    
+    z = x["weather"]
+ 
+    
+    weather_description = z[0]["description"]
+ 
+
+    print(" Temperature (in kelvin unit) = " +
+                    str(current_temperature) +
+          "\n atmospheric pressure (in hPa unit) = " +
+                    str(current_pressure) +
+          "\n humidity (in percentage) = " +
+                    str(current_humidity) +
+          "\n description = " +
+                    str(weather_description))
+ 
+else:
+    print(" City Not Found ")
